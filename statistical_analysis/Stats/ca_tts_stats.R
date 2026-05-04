@@ -4,7 +4,7 @@ cwd <- getwd();
 # setwd(data_dir);
 
 ## Installing Dependencies & Importing Libraries
-list.of.packages <- c('ggplot2', 'dplyr','corrplot','PerformanceAnalytics','nloptr','lme4','tidyr','car','ggpubr','emmeans','gridExtra')
+list.of.packages <- c('ggplot2', 'dplyr','corrplot','PerformanceAnalytics','nloptr','lme4','tidyr','car','ggpubr','emmeans','gridExtra','grid','cowplot')
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
@@ -318,6 +318,7 @@ abr_thresh_click <- ggplot(all_data_pre_post,aes(x=1, y=Click_Threshold, color=i
   theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())+
   ylab("ABR Threshold (dB SPL)")+
   xlab("Click")+
+  labs(color="Group")+
   ylim(0,100)+
   geom_text(
     data    = dat_text,
@@ -563,12 +564,11 @@ summary(pairwise_results,adjust = "Tukey")
 #4k
 abr_rat_4k <- ggplot(all_data_pre_post,aes(x=1, y=w51rat_4k, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = Exposed)) + 
   facet_wrap(~Group)+
-  mean_std_theme_chin(legend_on=TRUE)+
+  mean_std_theme_chin()+
   theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())+
   xlab("4k")+
   ylab("Wave V/I Ratio")+
   ylim(0,5)
-abr_rat_4k
 
 m_abr_rat_4k <- lmer(w51rat_4k~ Group*Exposed + (1|Chin), data = all_data_pre_post)
 Anova(m_abr_rat_4k, test.statistic = 'F')
@@ -582,8 +582,18 @@ summary(pairwise_results,adjust = "Tukey")
 
 ## Summative ABR Plot for Publication
 
-abr_summative <- ggarrange(abr_thresh_click, abr_thresh_4k, abr_rat_c, abr_rat_4k, nrow=2, ncol=2,labels = c("A","B","C","D"))
-save_fig("abr_summative.png", abr_summative, width = 8, height = 8, units = "in")
+abr_summative <- ggarrange(abr_thresh_click, abr_thresh_4k, abr_rat_c, abr_rat_4k, nrow=2, ncol=2,labels = c("A","B","C","D"),common.legend = TRUE,legend="bottom")
+final_plot <- ggdraw(abr_summative) +
+  draw_label("*", x = 0.77, y = 0.4, size = 25, fontface = "bold")+
+  draw_line(
+    x = c(0.65, 0.88), y = c(0.39, 0.39), 
+    color = "black", size = 0.8
+  )
+
+# View the result
+final_plot
+
+save_fig("abr_summative.png", final_plot, width = 8, height = 8, units = "in")
 
 
 ## DPOAE Plots & Stats
@@ -869,7 +879,8 @@ save_fig("R_PLV_all.png", r_plv_all, width = 10, height = 6, units = "in")
 
 #Correlations
 R_25_vs_ABRW1_amp_4 <- ggplot(all_data_pre_post, aes(x = X4k_P1, y = R_PLV_SQ25, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
-  scatter_theme_chin(label.x= .7)+
+  scatter_theme_chin(label.x= .7, legend_on=FALSE)+
+  labs(color="Group")+
   xlab("4k | ABR Wave I Amplitude (μV)")+
   ylab(bquote(R[PLV] ~ "SQ25"))+
   theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
@@ -882,10 +893,10 @@ R_25_vs_ABRW1_amp_c <- ggplot(all_data_pre_post, aes(x = Click_P1, y = R_PLV_SQ2
   theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
 #ylim(0,12)
 
-R_25_vs_ABRW1_amp = ggarrange(R_25_vs_ABRW1_amp_c,R_25_vs_ABRW1_amp_4,nrow=1)
+R_25_vs_ABRW1_amp = ggarrange(R_25_vs_ABRW1_amp_c,R_25_vs_ABRW1_amp_4,nrow=1,common.legend = TRUE,legend="bottom")
 save_fig("ABRClick_vs_RAM.png", R_25_vs_ABRW1_amp, width = 10, height = 6, units = "in")
 
-z# R_25_vs_ABRW5_amp <- ggplot(all_data_pre_post, aes(x = X4k_P5, y = R_PLV_SQ25, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
+# R_25_vs_ABRW5_amp <- ggplot(all_data_pre_post, aes(x = X4k_P5, y = R_PLV_SQ25, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
 #   scatter_theme_chin()+
 #   theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
 # #ylim(0,12)
@@ -1005,6 +1016,7 @@ R_25_vs_MEMR_Thresh
 ## ABR Wave V/I vs R_PLV_SQ25 Threshold
 R_25_vs_rat_c <- ggplot(all_data_pre_post, aes(x = w51rat_c, y = R_PLV_SQ25, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
   scatter_theme_chin(legend_on=FALSE,label.y=6.25)+
+  labs(color = "Group")+
   xlab("Click | Wave V/I Ratio")+
   ylab(bquote("SQ25 |" ~ R[PLV]))+
   theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
@@ -1039,7 +1051,7 @@ R_SAM_vs_rat_c <- ggplot(all_data_pre_post, aes(x = w51rat_c, y = R_PLV_SAM, col
 # R_SAM_vs_rat_c
 
 R_SAM_vs_rat_4k <- ggplot(all_data_pre_post, aes(x = w51rat_4k, y = R_PLV_SAM, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
-  scatter_theme_chin(legend_on=TRUE)+
+  scatter_theme_chin(legend_on=FALSE)+
   xlab("4k | Wave V/I Ratio")+
   ylab(bquote("SAM |" ~ R[PLV]))+
   theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
@@ -1047,6 +1059,6 @@ R_SAM_vs_rat_4k <- ggplot(all_data_pre_post, aes(x = w51rat_4k, y = R_PLV_SAM, c
 
 #All R_PLVs neg correlated with Wave V/I ratio, except SAM w/click Wave V/I. 
 
-r_plv_corr_rat_all <- ggarrange(R_25_vs_rat_c,R_25_vs_rat_4k,R_50_vs_rat_c,R_50_vs_rat_4k,R_SAM_vs_rat_c,R_SAM_vs_rat_4k, nrow=3, ncol=2)
+r_plv_corr_rat_all <- ggarrange(R_25_vs_rat_c,R_25_vs_rat_4k,R_50_vs_rat_c,R_50_vs_rat_4k,R_SAM_vs_rat_c,R_SAM_vs_rat_4k, nrow=3, ncol=2,common.legend = TRUE,legend="bottom")
 r_plv_corr_rat_all
 save_fig("R_PLV_cor_rat_all.png", r_plv_corr_rat_all, width = 8, height = 10, units = "in")
