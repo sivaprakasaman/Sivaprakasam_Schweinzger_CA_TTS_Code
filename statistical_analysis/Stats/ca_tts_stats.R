@@ -593,7 +593,7 @@ final_plot <- ggdraw(abr_summative) +
 # View the result
 final_plot
 
-save_fig("abr_summative.png", final_plot, width = 8, height = 8, units = "in")
+save_fig("abr_summative.png", abr_summative, width = 8, height = 8, units = "in")
 
 
 ## DPOAE Plots & Stats
@@ -938,11 +938,21 @@ R_50_vs_ABRW1_amp <- ggplot(all_data_pre_post, aes(x = X4k_P1, y = R_PLV_SQ50, c
   theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
 R_50_vs_ABRW1_amp
 
+R_50_vs_ABRW1_amp_c <- ggplot(all_data_pre_post, aes(x = Click_P1, y = R_PLV_SQ50, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
+  scatter_theme_chin()+
+  theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
+R_50_vs_ABRW1_amp_c
+
+
 R_SAM_vs_ABRW1_amp <- ggplot(all_data_pre_post, aes(x = X4k_P1, y = R_PLV_SAM, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
   scatter_theme_chin()+
   theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
 R_SAM_vs_ABRW1_amp
 
+R_SAM_vs_ABRW1_amp_c <- ggplot(all_data_pre_post, aes(x = Click_P1, y = R_PLV_SAM, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
+  scatter_theme_chin()+
+  theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
+R_SAM_vs_ABRW1_amp_c
 
 ## DPOAE
 R_25_vs_DPOAE_LF <- ggplot(all_data_pre_post, aes(x = DP_LF, y = R_PLV_SQ25, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
