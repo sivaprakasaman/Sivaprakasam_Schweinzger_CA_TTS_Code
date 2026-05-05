@@ -1069,6 +1069,6 @@ R_SAM_vs_rat_4k <- ggplot(all_data_pre_post, aes(x = w51rat_4k, y = R_PLV_SAM, c
 
 #All R_PLVs neg correlated with Wave V/I ratio, except SAM w/click Wave V/I. 
 
-r_plv_corr_rat_all <- ggarrange(R_25_vs_rat_c,R_25_vs_rat_4k,R_50_vs_rat_c,R_50_vs_rat_4k,R_SAM_vs_rat_c,R_SAM_vs_rat_4k, nrow=3, ncol=2,common.legend = TRUE,legend="bottom")
+r_plv_corr_rat_all <- ggarrange(R_25_vs_rat_c,R_25_vs_rat_4k,R_50_vs_rat_c,R_50_vs_rat_4k,R_SAM_vs_rat_c,R_SAM_vs_rat_4k, nrow=3, ncol=2,common.legend = TRUE,legend="bottom", labels = c("A","B","C","D","E","F"))
 r_plv_corr_rat_all
 save_fig("R_PLV_cor_rat_all.png", r_plv_corr_rat_all, width = 8, height = 10, units = "in")
