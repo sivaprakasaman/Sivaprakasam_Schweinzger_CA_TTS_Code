@@ -608,6 +608,8 @@ dp_reshaped$FreqRange <- factor(dp_reshaped$Freq,
 
 dp_oae_plot <- ggplot(dp_reshaped,aes(x=FreqRange, y=F2, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = Exposed)) + 
   facet_wrap(~Group)+
+  geom_line(aes(group = interaction(Chin, Exposed)), alpha = 0.3, position = position_dodge(width=0.75)) +
+  geom_point(position = position_dodge(width = 0.75), size = 1.75) +
   mean_std_theme_chin(legend_on=TRUE)+
   ylab("F2 Frequency Amplitude (dB SPL)")+
   xlab("Frequency (Hz)")+
