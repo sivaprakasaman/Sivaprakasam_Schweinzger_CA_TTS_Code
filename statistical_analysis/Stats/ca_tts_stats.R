@@ -361,7 +361,7 @@ summary(pairwise_results,adjust = "Tukey")
 
 ## Summary-- No significant changes due to exposure/group (either model or contrasts) 
 
-# Wave I (Check Amp AND Latency)
+# Wave 1 (Check Amp AND Latency)
 
 #4k
 #Amplitude
@@ -540,7 +540,7 @@ abr_rat_c <- ggplot(all_data_pre_post,aes(x=1, y=w51rat_c, color=interaction(Exp
   mean_std_theme_chin()+
   theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())+
   xlab("Click")+
-  ylab("Wave V/I Ratio")+
+  ylab("Wave 5/1 Ratio")+
   ylim(0,5)
 
 abr_rat_c = abr_rat_c+geom_text(
@@ -567,7 +567,7 @@ abr_rat_4k <- ggplot(all_data_pre_post,aes(x=1, y=w51rat_4k, color=interaction(E
   mean_std_theme_chin()+
   theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())+
   xlab("4k")+
-  ylab("Wave V/I Ratio")+
+  ylab("Wave 5/1 Ratio")+
   ylim(0,5)
 
 m_abr_rat_4k <- lmer(w51rat_4k~ Group*Exposed + (1|Chin), data = all_data_pre_post)
@@ -883,14 +883,14 @@ save_fig("R_PLV_all.png", r_plv_all, width = 10, height = 6, units = "in")
 R_25_vs_ABRW1_amp_4 <- ggplot(all_data_pre_post, aes(x = X4k_P1, y = R_PLV_SQ25, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
   scatter_theme_chin(label.x= .7, legend_on=FALSE)+
   labs(color="Group")+
-  xlab("4k | ABR Wave I Amplitude (μV)")+
+  xlab("4k | ABR Wave 1 Amplitude (μV)")+
   ylab(bquote(R[PLV] ~ "SQ25"))+
   theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
   #ylim(0,12)
 
 R_25_vs_ABRW1_amp_c <- ggplot(all_data_pre_post, aes(x = Click_P1, y = R_PLV_SQ25, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
   scatter_theme_chin(legend_on=FALSE)+
-  xlab("Click | ABR Wave I Amplitude (μV)")+
+  xlab("Click | ABR Wave 1 Amplitude (μV)")+
   ylab(bquote(R[PLV] ~ "SQ25"))+
   theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
 #ylim(0,12)
@@ -1025,51 +1025,51 @@ R_25_vs_MEMR_Thresh
 #Not correlated with changes in threshold...need more data.
 
 
-## ABR Wave V/I vs R_PLV_SQ25 Threshold
+## ABR Wave 5/1 vs R_PLV_SQ25 Threshold
 R_25_vs_rat_c <- ggplot(all_data_pre_post, aes(x = w51rat_c, y = R_PLV_SQ25, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
   scatter_theme_chin(legend_on=FALSE,label.y=6.25)+
   labs(color = "Group")+
-  xlab("Click | Wave V/I Ratio")+
+  xlab("Click | Wave 5/1 Ratio")+
   ylab(bquote("SQ25 |" ~ R[PLV]))+
   theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
 # R_25_vs_rat_c
 
 R_25_vs_rat_4k <- ggplot(all_data_pre_post, aes(x = w51rat_4k, y = R_PLV_SQ25, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
   scatter_theme_chin(legend_on=FALSE)+
-  xlab("4k | Wave V/I Ratio")+
+  xlab("4k | Wave 5/1 Ratio")+
   ylab(bquote("SQ25 |" ~ R[PLV]))+
   theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
 # R_25_vs_rat_4k
 
 R_50_vs_rat_c <- ggplot(all_data_pre_post, aes(x = w51rat_c, y = R_PLV_SQ50, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
   scatter_theme_chin(legend_on=FALSE)+
-  xlab("Click | Wave V/I Ratio")+
+  xlab("Click | Wave 5/1 Ratio")+
   ylab(bquote("SQ50 |" ~ R[PLV]))+
   theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
 # R_50_vs_rat_c
 
 R_50_vs_rat_4k <- ggplot(all_data_pre_post, aes(x = w51rat_4k, y = R_PLV_SQ50, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
   scatter_theme_chin(legend_on=FALSE)+
-  xlab("4k | Wave V/I Ratio")+
+  xlab("4k | Wave 5/1 Ratio")+
   ylab(bquote("SQ50 |" ~ R[PLV]))+
   theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
 # R_50_vs_rat_4k
 
 R_SAM_vs_rat_c <- ggplot(all_data_pre_post, aes(x = w51rat_c, y = R_PLV_SAM, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
   scatter_theme_chin(legend_on=FALSE, label.y = 6)+
-  xlab("Click | Wave V/I Ratio")+
+  xlab("Click | Wave 5/1 Ratio")+
   ylab(bquote("SAM |" ~ R[PLV]))+
   theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
 # R_SAM_vs_rat_c
 
 R_SAM_vs_rat_4k <- ggplot(all_data_pre_post, aes(x = w51rat_4k, y = R_PLV_SAM, color=interaction(Exposed, Group),fill=interaction(Exposed, Group), shape = interaction(Exposed,Group))) +
   scatter_theme_chin(legend_on=FALSE)+
-  xlab("4k | Wave V/I Ratio")+
+  xlab("4k | Wave 5/1 Ratio")+
   ylab(bquote("SAM |" ~ R[PLV]))+
   theme(panel.background = element_rect(fill = "gray90")) # Use a light gray hex code)
 # R_SAM_vs_rat_4k
 
-#All R_PLVs neg correlated with Wave V/I ratio, except SAM w/click Wave V/I. 
+#All R_PLVs neg correlated with Wave 5/1 ratio, except SAM w/click Wave 5/1. 
 
 r_plv_corr_rat_all <- ggarrange(R_25_vs_rat_c,R_25_vs_rat_4k,R_50_vs_rat_c,R_50_vs_rat_4k,R_SAM_vs_rat_c,R_SAM_vs_rat_4k, nrow=3, ncol=2,common.legend = TRUE,legend="bottom", labels = c("A","B","C","D","E","F"))
 r_plv_corr_rat_all
